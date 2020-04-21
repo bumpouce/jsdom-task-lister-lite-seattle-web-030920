@@ -24,22 +24,40 @@ document.addEventListener("DOMContentLoaded", () => {
     newLI.appendChild(button)
 
     inputField.value = ""
-
-    sortListItems(taskList);
+    //sayHi();
+    sortListItems(taskList)
   })
 
+  //function sayHi() {console.log("hello")}
+
   function sortListItems(parentEl){
-    let newArray = Array.from(parentEl.children)
-    // debugger
+    let newArray = Array.from(parentEl.children)    
+    function compare_item(a, b) {         
+      function convertSelection (input) {
+        if(input == "high")
+          return 3;
+        else if (input == "medium")
+          return 2;
+        else
+          return 1;
+      }
 
-    let high, medium, low
-    high = 1;
-    medium = 2; 
-    low = 3;
+      value1 = convertSelection(a.className);
+      value2 = convertSelection(b.className);      
+      if(value1 > value2)
+        return 1        
+      else if (value1 < value2)
+        return -1
+      else if (value1 == value2)
+        return 0        
+    }    
+    sortedArray = newArray.sort(compare_item);      
+    
+    while (parentEl.firstChild) {
+      parentEl.removeChild(parentEl.lastChild);
+    }
 
-    function compare(a, b) { if (a > b) return 1; if (b > a) return -1; return 0; } 
-    // .forEach(function (element) { element }); 
+    sortedArray.forEach(element => parentEl.appendChild(element))
   }
-
 
 });
